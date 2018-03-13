@@ -33,7 +33,8 @@ public class HelloServlet extends HttpServlet
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
-			throws ServletException, IOException {
+			throws ServletException, IOException 
+		{
 		PrintWriter out = response.getWriter();
 		
 		String username=request.getParameter("username");
@@ -56,6 +57,9 @@ public class HelloServlet extends HttpServlet
 		//out.println("<p>User Name: "+ user1 + "</p>");
 		//out.println("<h1>Hello " + username + "</h1>");
 		out.println("<h1>Your Password: "+ password + "</h1>");
+		
+		//SQL Injection
+		
 		out.close();
 	}
 
