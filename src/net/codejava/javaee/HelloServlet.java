@@ -1,7 +1,7 @@
 package net.codejava.javaee;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.sql.*;
 
 /**
  * Servlet implementation class HelloServlet
@@ -24,7 +24,8 @@ public class HelloServlet extends HttpServlet
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public HelloServlet() {
+    public HelloServlet() 
+	{
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,10 +37,9 @@ public class HelloServlet extends HttpServlet
 			throws ServletException, IOException 
 		{
 		PrintWriter out = response.getWriter();
-		
 		String username=request.getParameter("username");
 		String password=request.getParameter("password");
-		Pattern pattern = Pattern.compile("[a-zA-Z0-9]*");
+		/*Pattern pattern = Pattern.compile("[a-zA-Z0-9]*");
 		Matcher matcher = pattern.matcher(username);
 		if (matcher.matches()) 
 		{
@@ -60,7 +60,43 @@ public class HelloServlet extends HttpServlet
 		
 		//SQL Injection
 		
-		out.close();
+		//out.close();*/
+		
+		try {
+
+            Connection conn = null;
+            String url = "jdbc:mysql://192.168.2.128:3306/";
+            String dbName = "anvayaV2";
+            String driver = "com.mysql.jdbc.Driver";
+            String userName = "root";
+            String passwd = "";
+            try {
+                Class.forName(driver).newInstance();
+                conn = DriverManager.getConnection(url + dbName, userName, passwd);
+
+                //Statement st = conn.createStatement();
+                //String query = "SELECT * FROM  User where userId= "+ username;
+				PreparedStatement st = conn.prepareStatement("SELECT * FROM  User where userId=?");
+				st.setString(1, username); 
+                //out.println("Query : " + query);
+                //System.out.printf(query);
+                //ResultSet res = st.executeQuery(query);
+				ResultSet res = st.executeQuery();
+
+                out.println("Results");
+                while (res.next()) {
+                    String s = res.getString("username");
+                    out.println("\t\t" + s);
+                }
+                conn.close();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } finally {
+            out.close();
+        }
+		//out.close();
 	}
 
 }
