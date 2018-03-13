@@ -5,10 +5,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Hello World Java EE</title>
+<title>TTT</title>
 </head>
 <body>
-	<h1>Hello JSP and Servlet!</h1>
+	<h1>TTT!!!</h1>
 	<form action="helloServlet" method="post">
 		Enter your User name: <input type="text" name="username" size="20"><br>
 		Enter your Password: <input type="text" name="password" size="20"><br>
